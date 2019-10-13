@@ -59,7 +59,7 @@
                               <td><?=$value['karyawan_nama']?></td>
                               <td><?=$value['jabatan_nama']?></td>
                               <td><?=$value['karyawan_no_rekening']?></td>
-                              <td><?=$value['karyawan_tanggal_masuk']?></td>
+                              <td><?= date_indo($value['karyawan_tanggal_masuk'])?></td>
                               <td><?=$value['karyawan_alamat']?></td>
                               <td>
                                 <a href="<?php echo base_url('karyawan/edit/'.$value['karyawan_nik']); ?>" class="btn btn-success">Edit</a>

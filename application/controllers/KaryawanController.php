@@ -11,6 +11,7 @@
       parent::__construct();
       $this->load->model('JabatanModel');
       $this->load->model('KaryawanModel');
+      $this->load->helper('tgl_indo_helper');
     }
     function index()
     {

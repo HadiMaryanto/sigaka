@@ -65,5 +65,7 @@ $route['logout'] = 'AuthController/logout';
 $route['absen'] = 'AbsenController/index';
 $route['absen/tambah'] = 'AbsenController/tambah';
 $route['absen/edit'] = 'AbsenController/edit';
+$route['gaji'] = 'GajiController/index';
+$route['gaji/detail/(:any)'] = 'GajiController/detail/$1';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

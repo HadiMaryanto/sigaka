@@ -26,18 +26,23 @@
                         <td><?=$no ?></td>
                         <td><?=$value['karyawan_nama']?></td>
                         <td><?=$value['absen_hari']?></td>
-                        <td><?=$value['absen_date_created']?></td>
+                        <td><?= date_indo($value['absen_date_created'])?></td>
                         <td><?=$value['absen_jam_lembur']?></td>
                         <td>
-                          <?=$value['absen_status']?>
                           <?php
                             if ($value['absen_status'] == 'normal') {
                           ?>
+                          <div class="badge badge-primary">
+                            <?=$value['absen_status']?>
+                          </div>
                         </td>
                         <td>
-                          <a class="btn btn-success" data-toggle="modal" data-target="#exampleModal1<?php echo $value['absen_id'] ?>">Lembur</a>
+                          <a class="btn btn-primary" data-toggle="modal" data-target="#exampleModal1<?php echo $value['absen_id'] ?>">Lembur</a>
                         </td>
                       <?php }elseif ($value['absen_status'] == 'lembur') { ?>
+                        <div class="badge badge-success">
+                          <?=$value['absen_status']?>
+                        </div>
                         <td>
                           <a class="btn disabled btn-success" data-toggle="modal" data-target="#exampleModal1<?php echo $value['absen_id'] ?>">Lembur</a>
                         </td>
