@@ -1,3 +1,13 @@
+    <?php if ($this->session->flashdata('alert') == 'absen_sudah_ada') { ?>
+      <div class="alert alert-danger alert-dismissible show fade">
+        <div class="alert-body">
+          <button class="close" data-dismiss="alert">
+          <span>&times;</span>
+          </button>
+          Karyawan Sudah Absen
+        </div>
+      </div>
+    <?php } ?>
       <div class="col-12">
           <div class="card">
             <div class="card-body">
@@ -26,7 +36,8 @@
                         <td><?=$no ?></td>
                         <td><?=$value['karyawan_nama']?></td>
                         <td><?=$value['absen_hari']?></td>
-                        <td><?= date_indo($value['absen_date_created'])?></td>
+                        <?php $tanggal = explode(' ',$value['absen_date_created']) ?>
+                        <td><?= date_indo($tanggal[0])?></td>
                         <td><?=$value['absen_jam_lembur']?></td>
                         <td>
                           <?php

@@ -36,6 +36,15 @@
     {
       $this->db->delete('sigaka_karyawan',$id);
     }
+    function detail($id)
+    {
+      $this->db->select('*');
+      $this->db->from('sigaka_karyawan');
+      $this->db->join('sigaka_jabatan','sigaka_jabatan.jabatan_id = sigaka_karyawan.karyawan_jabatan');
+      $this->db->where('karyawan_nik',$id);
+      $query = $this->db->get();
+      return $query->row_array();
+    }
   }
 
 

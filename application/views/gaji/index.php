@@ -27,6 +27,7 @@
         </div>
       </div>
     <?php } ?>
+
     <div class="card">
       <div class="card-header">
         <h4>Gaji Karyawan</h4>

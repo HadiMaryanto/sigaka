@@ -22,6 +22,7 @@
     function detail()
     {
       $id = $this->uri->segment(3);
+      $data['gaji'] = $this->GajiModel->get_idGaji($id)->result_array();          
       $data['row'] = $this->KaryawanModel->get_id($id)->row_array();
       $this->load->view('templates/header');
       $this->load->view('gaji/detail',$data);
