@@ -86,9 +86,15 @@
 								<li><a class="nav-link" href="<?php echo base_url('jabatan'); ?>">Data Jabatan</a></li>
 							</ul>
 						</li>
-						<li class="dropdown"><a href="<?php echo base_url('absen') ?>"><i data-feather="user"></i><span>Absen</span></a></li>
 
-						<li class="dropdown"><a href="<?php echo base_url('gaji') ?>"><i data-feather="credit-card"></i><span>Gaji</span></a></li>
+						<li class="dropdown"><a href="#" class="nav-link has-dropdown"><i
+									data-feather="credit-card"></i><span>Gaji</span></a>
+							<ul class="dropdown-menu">
+								<li><a class="nav-link" href="<?php echo base_url('project'); ?>">Project</a></li>
+								<li><a class="nav-link" href="<?php echo base_url('manpower'); ?>">Manpower</a></li>
+								<li><a class="nav-link" href="<?php echo base_url('contract'); ?>">Contract</a></li>
+							</ul>
+						</li>
 
 						<!-- <li class="dropdown"><a href="#" class="nav-link has-dropdown"><i
 									data-feather="command"></i><span>Gaji</span></a>
