@@ -27,4 +27,8 @@
      $query = $this->db->get();
      return $query->result_array();
    }
+   public function simpan_detail_gaji($data)
+   {
+     $this->db->insert('sigaka_gaji_detail', $data);
+   }
  }

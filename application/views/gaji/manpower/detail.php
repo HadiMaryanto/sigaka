@@ -30,18 +30,22 @@
           <tbody>
             <?php if ($detail != null): ?>
               <?php
-              $no = 1;
               foreach ($detail as $key => $value): ?>
                 <tr>
-                  <th><?php echo $no ?></th>
-                  <th><?php echo $value['karyawan_nama'] ?></th>
-                  <th><?php echo $value['karyawan_nik'] ?></th>
-                  <th><?php echo $value['jabatan_nama'] ?></th>
-                  <th>
-                    <a href="<?php echo $value['gaji_id'] ?>" class="btn btn-primary btn-sm">Detail</a>
-                  </th>
+                  <td><?php echo $value['detail_tanggal'] ?></td>
+                  <td><?php echo $value['detail_basic'] ?></td>
+                  <td><?php echo $value['detail_uang_makan'] ?></td>
+                  <td></td>
+                  <td><?php echo $value['detail_jam_keluar'] ?></td>
+                  <td><?php echo $value['detail_non_stop'] ?></td>
+                  <td><?php echo $value['detail_jam_lembur'] ?></td>
+                  <td><?php echo $value['detail_jam_basic'] ?></td>
+                  <td><?php echo $value['detail_lembur'] ?></td>
+                  <td><?php echo $value['detail_lembur_1_5'] ?></td>
+                  <td><?php echo $value['detail_lembur_2'] ?></td>
+                  <td><?php echo $value['detail_total_lembur'] ?></td>
                 </tr>
-              <?php $no++;endforeach; ?>
+              <?php endforeach; ?>
             <?php endif; ?>
           </tbody>
         </table>
@@ -61,7 +65,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form class="needs-validation" novalidate="" action="<?php echo base_url('manpower/tambah') ?>" method="post">
+            <form class="needs-validation" novalidate="" action="<?php echo base_url('manpower/tambah/'.$id) ?>" method="post">
               <div class="form-group">
                 <label>Tanggal</label>
                 <div class="input-group">
