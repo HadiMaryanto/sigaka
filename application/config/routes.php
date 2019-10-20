@@ -21,6 +21,7 @@ $route['logout'] = 'AuthController/logout';
 $route['manpower'] = 'ManpowerController';
 $route['manpower/lihat/(:any)'] = 'ManpowerController/lihat/$1';
 $route['manpower/detail/(:any)'] = 'ManpowerController/detail/$1';
+$route['manpower/tambah'] = 'ManpowerController/tambah';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

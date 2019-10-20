@@ -4,7 +4,7 @@
             <h4>Data Gaji</h4>
           </div>
           <div class="card-body">
-            <a href="<?php echo base_url('')  ?>" class="btn btn-primary">Tambah</a><hr>
+            <a href="<?php echo base_url('gaji')  ?>" class="btn btn-primary">Tambah</a><hr>
             <div class="table-responsive">
               <table class="table table-striped" id="table-1">
                 <thead>
