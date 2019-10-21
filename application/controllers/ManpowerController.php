@@ -334,7 +334,7 @@ class ManpowerController extends CI_Controller
             $jamBasic = 8;
             $lembur = $jamLembur + 1.5;
             $lembur1_5 = 1;
-            $lembur2 = $lembur - $lembur1_5 ;
+            $lembur2 = $jamLembur - $lembur1_5 ;
             $totalLembur = ($lembur1_5 * 1.5) + ($lembur2 * 2) + 2.5;
           }
           elseif ($jamKeluar >= 19) {
@@ -344,7 +344,7 @@ class ManpowerController extends CI_Controller
             $jamBasic = 8;
             $lembur = $jamLembur + 1.5;
             $lembur1_5 = 1;
-            $lembur2 = $lembur - ($lembur1_5 * 1.5) ;
+            $lembur2 = $jamLembur - ($lembur1_5 * 1.5) ;
             $totalLembur = ($lembur1_5 * 1.5) + ($lembur2 * 2) + 2.5;
           }
         }
