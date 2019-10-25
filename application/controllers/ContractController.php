@@ -2,14 +2,17 @@
 /**
  *
  */
-class ManpowerController extends CI_Controller
+class ContractController extends CI_Controller
 {
 
   public function __construct()
   {
     parent::__construct();
     $this->load->model('GajiModel','gaji');
+    $this->load->model('KaryawanModel');
+    $this->load->model('JabatanModel');
     $this->load->helper('tgl_indo_helper');
+
   }
   public function index()
   {
@@ -18,10 +21,10 @@ class ManpowerController extends CI_Controller
       $bulan = $this->input->post('bulan');
       $dataBulan = $tahun.'-'.$bulan;
       // var_dump($dataBulan);die;
-      redirect('manpower/lihat/'.$dataBulan);
+      redirect('contract/lihat/'.$dataBulan);
     }else{
       $this->load->view('templates/header');
-      $this->load->view('gaji/manpower/index');
+      $this->load->view('gaji/contract/index');
       $this->load->view('templates/footer');
     }
   }
@@ -31,14 +34,14 @@ class ManpowerController extends CI_Controller
     $data = array();
     if ($cekGaji != null) {
       $data['gaji'] = $cekGaji;
+      $data['karyawan'] = $this->gaji->tampildata();
       $data['bulan'] = $dataBulan;
     }else {
       $data['gaji'] = null;
       $data['bulan'] = $dataBulan;
     }
-    $data['karyawan1'] = $this->gaji->tampildata();
     $this->load->view('templates/header');
-    $this->load->view('gaji/manpower/lihat',$data);
+    $this->load->view('gaji/contract/lihat',$data);
     $this->load->view('templates/footer');
   }
   public function detail($id)
@@ -47,7 +50,7 @@ class ManpowerController extends CI_Controller
     $data['detail'] = $this->gaji->detail_gaji($id);
     $data['gaji'] = $this->gaji->lihat_gaji($id);
     $this->load->view('templates/header');
-    $this->load->view('gaji/manpower/detail',$data);
+    $this->load->view('gaji/contract/detail',$data);
     $this->load->view('templates/footer');
   }
   public function tambah($id)
@@ -368,17 +371,17 @@ class ManpowerController extends CI_Controller
         'detail_lembur_2'=>$lembur2,
         'detail_total_lembur'=>$totalLembur
       );
-      $validasi = $this->gaji->validasi_detail($data['detail_tanggal'],'manpower');
+      $validasi = $this->gaji->validasi_detail($data['detail_tanggal'],'contract');
       if ($validasi == null) {
         $this->gaji->simpan_detail_gaji($data);
         $this->session->set_flashdata('alert', '1berhasil_tambah');
-        redirect('manpower/detail/'.$id);
+        redirect('contract/detail/'.$id);
       }else{
       $this->session->set_flashdata('alert', '1gagall_tambah');
-      redirect('manpower/detail/'.$id);
+      redirect('contract/detail/'.$id);
       // echo "<pre>";
       // var_dump($data);die;
-      }
+    }
     }
   }
   public function pekerjabaru($tanggal)
@@ -386,19 +389,21 @@ class ManpowerController extends CI_Controller
     if (isset($_POST['submit'])) {
       $data = array(
         'gaji_karyawan_nik'=>$this->input->post('namakaryawan'),
-        'gaji_tipe'=>'manpower'
+        'gaji_tipe'=>'contract'
       );
       $validasi = $this->gaji->validasi_gaji($data['gaji_karyawan_nik'],$tanggal);
       if ($validasi == null) {
         $this->gaji->pekerjabaru($data);
         $this->session->set_flashdata('alert', 'berhasil_tambah');
-        redirect('manpower/lihat/'.$tanggal);
-      }else{
-      $this->session->set_flashdata('alert', 'gagal_tambah');
-      redirect('manpower/lihat/'.$tanggal);
-      // // echo "<pre>";
-      // // var_dump($validasi);die;
+        redirect('contract/lihat/'.$tanggal);
+      }else {
+        $this->session->set_flashdata('alert', 'gagall_tambah');
+        redirect('contract/lihat/'.$tanggal);
       }
+
+      // echo "<pre>";
+      // var_dump($data);die;
     }
+
   }
 }

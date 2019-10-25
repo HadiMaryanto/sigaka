@@ -4,7 +4,7 @@
                     <h4>Pilih Bulan</h4>
                   </div>
                   <div class="card-body">
-                    <form class="needs-validation" novalidate="" action="<?php echo base_url('manpower') ?>" method="post">
+                    <form class="needs-validation" novalidate="" action="<?php echo base_url('project') ?>" method="post">
                       <div class="form-group">
                         <div class="row">
                           <div class="col-2">

@@ -1,5 +1,5 @@
             <div class="col-12">
-                <?php if ($this->session->flashdata('alert') == 'berhasil_tambah') { ?>
+                <?php if ($this->session->flashdata('alert') == 'berhasil_tambh') { ?>
                   <div class="alert alert-primary alert-dismissible show fade">
                     <div class="alert-body">
                       <button class="close" data-dismiss="alert">

@@ -7,7 +7,7 @@
       Berhasil Menambah Gaji Baru
     </div>
   </div>
-<?php }elseif ($this->session->flashdata('alert') == 'berhasil_edit') { ?>
+<?php }elseif ($this->session->flashdata('alert') == '1berhasil_edit') { ?>
   <div class="alert alert-success alert-dismissible show fade">
     <div class="alert-body">
       <button class="close" data-dismiss="alert">
@@ -29,7 +29,7 @@
 <div class="col-12">
   <div class="card">
     <div class="card-header">
-      <h4>Detail Gaji</h4>
+      <h4>Detail Gaji </h4>
     </div>
     <div class="card-body">
       <table>
@@ -131,7 +131,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form class="needs-validation" novalidate="" action="<?php echo base_url('manpower/tambah/'.$id) ?>" method="post">
+            <form class="needs-validation" novalidate="" action="<?php echo base_url('contract/tambah/'.$id) ?>" method="post">
               <div class="form-group">
                 <label>Tanggal</label>
                 <div class="input-group">

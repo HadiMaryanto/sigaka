@@ -129,26 +129,6 @@
 	              </div>
 							<?php } ?>
 						</div>
-
 					</div>
 
-					<?php if ($this->session->flashdata('alert') == 'berhasil_tambah') { ?>
-				    <div class="alert alert-primary alert-dismissible show fade">
-				      <div class="alert-body">
-				        <button class="close" data-dismiss="alert">
-				        <span>&times;</span>
-				        </button>
-				        Berhasil Mengisi Absen
-				      </div>
-				    </div>
-				  <?php }elseif ($this->session->flashdata('alert') == 'berhasil_edit') { ?>
-				    <div class="alert alert-success alert-dismissible show fade">
-				      <div class="alert-body">
-				        <button class="close" data-dismiss="alert">
-				        <span>&times;</span>
-				        </button>
-				        Berhasil Menambah Jam Lembur
-				      </div>
-				    </div>
-				  <?php } ?>
 					</section>

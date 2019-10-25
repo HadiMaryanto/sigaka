@@ -32,7 +32,7 @@
           'karyawan_alamat'=>$this->input->post('alamat')
         );
         $data = $this->KaryawanModel->simpan($data);
-        $this->session->set_flashdata('alert', 'berhasil_tambah');
+        $this->session->set_flashdata('alert', 'berhasil_tambh');
         redirect('karyawan');
       }
       $data['jabatan'] = $this->JabatanModel->tampildata();

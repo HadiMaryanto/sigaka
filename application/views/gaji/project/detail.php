@@ -131,7 +131,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form class="needs-validation" novalidate="" action="<?php echo base_url('manpower/tambah/'.$id) ?>" method="post">
+            <form class="needs-validation" novalidate="" action="<?php echo base_url('project/tambah/'.$id) ?>" method="post">
               <div class="form-group">
                 <label>Tanggal</label>
                 <div class="input-group">

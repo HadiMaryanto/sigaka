@@ -22,6 +22,19 @@ $route['manpower'] = 'ManpowerController';
 $route['manpower/lihat/(:any)'] = 'ManpowerController/lihat/$1';
 $route['manpower/detail/(:any)'] = 'ManpowerController/detail/$1';
 $route['manpower/tambah/(:any)'] = 'ManpowerController/tambah/$1';
+$route['manpower/pekerjabaru/(:any)'] = 'ManpowerController/pekerjabaru/$1';
+
+$route['project'] = 'ProjectController';
+$route['project/lihat/(:any)'] = 'ProjectController/lihat/$1';
+$route['project/detail/(:any)'] = 'ProjectController/detail/$1';
+$route['project/tambah/(:any)'] = 'ProjectController/tambah/$1';
+$route['project/pekerjabaru/(:any)'] = 'ProjectController/pekerjabaru/$1';
+
+$route['contract'] = 'ContractController';
+$route['contract/lihat/(:any)'] = 'ContractController/lihat/$1';
+$route['contract/detail/(:any)'] = 'ContractController/detail/$1';
+$route['contract/tambah/(:any)'] = 'ContractController/tambah/$1';
+$route['contract/pekerjabaru/(:any)'] = 'ContractController/pekerjabaru/$1';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
