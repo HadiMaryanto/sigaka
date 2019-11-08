@@ -27,7 +27,9 @@
           'karyawan_nik'=>$this->input->post('nik'),
           'karyawan_nama'=>$this->input->post('namakaryawan'),
           'karyawan_jabatan'=>$this->input->post('jabatan'),
+          'karyawan_nama_rekening'=>$this->input->post('namarekening'),
           'karyawan_no_rekening'=>$this->input->post('norekening'),
+          'karyawan_bpjs'=>$this->input->post('bpjs'),
           'karyawan_tanggal_masuk'=>$this->input->post('tglmasuk'),
           'karyawan_alamat'=>$this->input->post('alamat')
         );

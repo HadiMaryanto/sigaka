@@ -14,6 +14,7 @@
     {
       $this->db->from('sigaka_karyawan');
       $this->db->join('sigaka_jabatan','sigaka_jabatan.jabatan_id = sigaka_karyawan.karyawan_jabatan');
+      $this->db->order_by('karyawan_tanggal_dibuat','desc');
       $query = $this->db->get();
       return $query->result_array();
     }

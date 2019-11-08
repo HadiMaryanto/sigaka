@@ -32,8 +32,30 @@
                       </div>
                     </div>
                     <div class="form-group">
+                      <label>Nama Rekening</label>
+                      <select class="form-control" name="namarekening">
+                        <option disabled selected>----pilih----</option>
+                        <option value="mandiri">Mandiri</option>
+                        <option value="sinarmas">SinarMas</option>
+                      </select>
+                      <div class="invalid-feedback">
+                        No Rekening tidak boleh kosong
+                      </div>
+                    </div>
+                    <div class="form-group">
                       <label>No Rekening</label>
                       <input type="text" class="form-control" name="norekening" tabindex="4" required>
+                      <div class="invalid-feedback">
+                        No Rekening tidak boleh kosong
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>BPJS</label>
+                      <select class="form-control" name="bpjs" required>
+                        <option disabled selected>----pilih----</option>
+                        <option value="ada"> Ada</option>
+                        <option value="tidak">Tidak Ada</option>
+                      </select>
                       <div class="invalid-feedback">
                         No Rekening tidak boleh kosong
                       </div>

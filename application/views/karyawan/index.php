@@ -45,7 +45,7 @@
                             <th>Jabatan</th>
                             <th>No rekening</th>
                             <th>Tanggal Masuk</th>
-                            <th>Alamat</th>
+                            <!-- <th>Alamat</th> -->
                             <th>Action</th>
                           </tr>
                         </thead>
@@ -60,7 +60,7 @@
                               <td><?=$value['jabatan_nama']?></td>
                               <td><?=$value['karyawan_no_rekening']?></td>
                               <td><?= date_indo($value['karyawan_tanggal_masuk'])?></td>
-                              <td><?=$value['karyawan_alamat']?></td>
+                              <!-- <td><?=$value['karyawan_alamat']?></td> -->
                               <td>
                                 <a href="<?php echo base_url('karyawan/edit/'.$value['karyawan_nik']); ?>" class="btn btn-success">Edit</a>
                                 <a href="<?php echo base_url('karyawan/delete/'.$value['karyawan_nik']); ?>" class="btn btn-danger" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">Hapus</a>
@@ -69,7 +69,6 @@
                           <?php
                           $no++;
                           endforeach; ?>
-
                         </tbody>
                       </table>
                     </div>

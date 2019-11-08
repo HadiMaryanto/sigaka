@@ -9,9 +9,9 @@
                         <div class="row">
                           <div class="col-2">
                             <label>Tahun</label>
-                            <input type="number" max="2100" min="2000" name="tahun" class="form-control" required>
+                            <input type="number" max="2100" min="2000" name="tahun" class="form-control" required value="<?php echo date('Y') ?>">
                             <div class="invalid-feedback">
-                              Nama Jabatan tidak boleh kosong
+                              data tidak boleh kosong
                             </div>
                           </div>
                           <div class="col-8">

@@ -46,6 +46,8 @@ class ProjectController extends CI_Controller
     $data['id'] = $id;
     $data['detail'] = $this->gaji->detail_gaji($id);
     $data['gaji'] = $this->gaji->lihat_gaji($id);
+    $data['potong'] = $this->gaji->potonganData($id);
+    $data['ubahPotong'] = $this->gaji->utkPotong($id);
     $this->load->view('templates/header');
     $this->load->view('gaji/project/detail',$data);
     $this->load->view('templates/footer');
@@ -368,7 +370,7 @@ class ProjectController extends CI_Controller
         'detail_lembur_2'=>$lembur2,
         'detail_total_lembur'=>$totalLembur
       );
-      $validasi = $this->gaji->validasi_detail($data['detail_tanggal'],'project');
+      $validasi = $this->gaji->validasi_detail($data['detail_tanggal'],'project',$data['detail_gaji_id']);
       if ($validasi == null) {
         $this->gaji->simpan_detail_gaji($data);
         $this->session->set_flashdata('alert', '1berhasil_tambah');
@@ -400,5 +402,67 @@ class ProjectController extends CI_Controller
       // echo "<pre>";
       // var_dump($data);die;
     }
+  }
+  public function potongan($id)
+  {
+    if (isset($_POST['submit'])) {
+      $data = array(
+        'potongan_gaji_id'=>$id,
+        'potongan_jamsostek_kesehatan'=>$this->input->post('kesehatan'),
+        'potongan_jamsostek_kerja'=>$this->input->post('ketenagakerjaan'),
+        'potongan_dana_pensiun'=>$this->input->post('danapensiun'),
+        'potongan_pinjaman'=>$this->input->post('pinjaman'),
+        'potongan_rapel'=>$this->input->post('rapel')
+      );
+      // echo "<pre>";
+      // var_dump($data);die;
+      $this->gaji->potonganSimpan($data);
+      $this->session->set_flashdata('alert', 'berhasil');
+      redirect('project/detail/'.$id);
+    }
+  }
+  public function ubahPot($id)
+  {
+    if (isset($_POST['submit'])) {
+      $idPotong = $this->input->post('potongId');
+      $kesehatan = $this->input->post('kesehatan');
+      $kerja = $this->input->post('ketenagakerjaan');
+      $pensiun = $this->input->post('danapensiun');
+      $pinjam = $this->input->post('pinjaman');
+      $rapel = $this->input->post('rapel');
+
+      $data = array(
+        'potongan_jamsostek_kesehatan'=>$kesehatan,
+        'potongan_jamsostek_kerja'=>$kerja,
+        'potongan_dana_pensiun'=>$pensiun,
+        'potongan_pinjaman'=>$pinjam,
+        'potongan_rapel'=>$rapel
+      );
+      // echo "<pre>";
+      // var_dump($data);die;
+      $this->gaji->ubahPot($idPotong,$data);
+      $this->session->set_flashdata('alert', 'berhasil_edit');
+      redirect('project/detail/'.$id);
+    }
+  }
+  public function laporan($dataBulan)
+  {
+    $cekGaji = $this->gaji->cek_gaji($dataBulan);
+    $data = array();
+    if ($cekGaji != null) {
+      $data['gaji'] = $cekGaji;
+      // $data['seluruh'] = $this->gaji->dataSeluruh($dataBulan);
+      $data['bulan'] = $dataBulan;
+    }else {
+      $data['gaji'] = null;
+      // $data['seluruh'] = $this->gaji->dataSeluruh($dataBulan);
+      $data['bulan'] = $dataBulan;
+    }
+    // $data['laporan'] = $this->gaji->detailPotongan($dataBulan);
+    $data['seluruh'] = $this->gaji->dataSeluruh($dataBulan);
+    $data['detail'] = $this->gaji->detailSeluruh($dataBulan);
+    $this->load->view('templates/header');
+    $this->load->view('gaji/project/laporan',$data);
+    $this->load->view('templates/footer');
   }
 }

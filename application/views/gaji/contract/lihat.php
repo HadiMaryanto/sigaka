@@ -16,7 +16,7 @@
       Berhasil Mengubah Data
     </div>
   </div>
-<?php }elseif ($this->session->flashdata('alert') == 'gagal_tambah') { ?>
+<?php }elseif ($this->session->flashdata('alert') == 'gagall_tambah') { ?>
 <div class="alert alert-danger alert-dismissible show fade">
   <div class="alert-body">
     <button class="close" data-dismiss="alert">
@@ -32,7 +32,8 @@
     <h4>Data Gaji Contract Bulan <?php $tanggal = explode('-',$bulan); echo bulan($tanggal[1]).' '.$tanggal[0]; ?></h4>
     </div>
     <div class="card-body">
-      <a href="<?php echo base_url('gaji')  ?>" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Tambah</a><hr>
+      <a href="<?php echo base_url('gaji')  ?>" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Tambah</a>
+      <a href="<?php echo base_url('contract/laporan/'.$this->uri->segment(3))  ?>" class="btn btn-warning" >Laporan</a><hr>
       <div class="table-responsive">
         <table class="table table-striped" id="table-1">
           <thead>

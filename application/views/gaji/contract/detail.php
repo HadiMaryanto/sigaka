@@ -25,7 +25,17 @@
     Hari ini sudah diinput gaji
   </div>
 </div>
+<?php }elseif ($this->session->flashdata('alert') == 'berhasil') { ?>
+<div class="alert alert-info alert-dismissible show fade">
+  <div class="alert-body">
+    <button class="close" data-dismiss="alert">
+    <span>&times;</span>
+    </button>
+    Potongan Berhasil di inputkan
+  </div>
+</div>
 <?php } ?>
+
 <div class="col-12">
   <div class="card">
     <div class="card-header">
@@ -68,9 +78,44 @@
             <td> : </td>
             <td><?php echo $gaji['jabatan_lembur'] ?></td>
           </tr>
+          <tr>
+            <td>Menggunakan BPJS </td>
+            <td> : </td>
+            <td><?php echo $gaji['karyawan_bpjs'] ?></td>
+          </tr>
+          <tr>
+            <td>Jaminan Kesehatan </td>
+            <td> : </td>
+            <td><?php echo $potong['potongan_jamsostek_kesehatan'] ?></td>
+          </tr>
+          <tr>
+            <td>Jaminan Ketenagakerjaan </td>
+            <td> : </td>
+            <td><?php echo $potong['potongan_jamsostek_kerja'] ?></td>
+          </tr>
+          <tr>
+            <td>Dana Pensiun </td>
+            <td> : </td>
+            <td><?php echo $potong['potongan_dana_pensiun'] ?></td>
+          </tr>
+          <tr>
+            <td>Pinjaman </td>
+            <td> : </td>
+            <td><?php echo $potong['potongan_pinjaman'] ?></td>
+          </tr>
+          <tr>
+            <td>Rapel </td>
+            <td> : </td>
+            <td><?php echo $potong['potongan_rapel'] ?></td>
+          </tr>
       </table>
       <hr>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Tambah</button><hr>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Tambah</button>
+      <?php if ($ubahPotong == null): ?>
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal1">Tambah Potongan</button><hr>
+      <?php else: ?>
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal2<?php echo $ubahPotong['potongan_id'];?>">Edit Potongan</button><hr>
+      <?php endif; ?>
       <div class="table-responsive">
         <table class="table table-striped" id="table-1" width="100%">
           <thead>
@@ -94,7 +139,12 @@
             </tr>
           </thead>
           <tbody>
-            <?php if ($detail != null): ?>
+            <?php
+            $totalBasic = 0;
+            $totalMeal = 0;
+            $totalLembur = 0;
+
+            if ($detail != null): ?>
               <?php
               foreach ($detail as $key => $value): ?>
                 <tr>
@@ -111,14 +161,87 @@
                   <td><?php echo $value['detail_lembur_2'] ?></td>
                   <td><?php echo $value['detail_total_lembur'] ?></td>
                 </tr>
-              <?php endforeach; ?>
+              <?php
+              $totalBasic = $totalBasic + $value['detail_basic'];
+              $totalMeal = $totalMeal + $value['detail_uang_makan'];
+              $totalLembur = $totalLembur + $value['detail_total_lembur'];
+              $hasilBasic = $totalBasic * $gaji['jabatan_basic'];
+              $hasilMeal = $totalMeal * $gaji['jabatan_uang_makan'];
+              $hasilTotal = $totalLembur * $gaji['jabatan_lembur'];
+              $gajiSeluruh = $hasilBasic + $hasilMeal + $hasilTotal;
+              $jamSostek = $potong['potongan_jamsostek_kesehatan'] + $potong['potongan_jamsostek_kerja'] + $potong['potongan_dana_pensiun'];
+              $totalPotong = $jamSostek + $potong['potongan_pinjaman'] + $potong['potongan_rapel'];
+              $totalAB = $gajiSeluruh - $totalPotong;
+            endforeach; ?>
             <?php endif; ?>
           </tbody>
+          <tr style="margin-bottom:10px;border:1px;">
+            <td class="text-center">Total</td>
+            <td><?php echo $totalBasic; ?> </td>
+            <td colspan="9"><?php echo $totalMeal; ?></td>
+            <td><?php echo $totalLembur; ?></td>
+          </tr>
+          <table style="color:black;">
+            <tr>
+              <td>CALCULATION</td>
+            </tr>
+            <tr>
+              <td colspan="3">1. total basic </td>
+              <td><?php echo $totalBasic; ?> x <?php echo $gaji['jabatan_basic'] ?></td>
+              <td> = </td>
+              <td>Rp <?php echo $hasilBasic ?></td>
+            </tr>
+            <tr>
+              <td colspan="3">2. total meal </td>
+              <td><?php echo $totalMeal; ?> x <?php echo $gaji['jabatan_uang_makan'] ?></td>
+              <td> = </td>
+              <td>Rp <?php echo $hasilMeal ?></td>
+            </tr>
+            <tr>
+              <td colspan="3">3. total lembur </td>
+              <td><?php echo $totalLembur ?> x <?php echo $gaji['jabatan_lembur'] ?></td>
+              <td> = </td>
+              <td> Rp <?php echo $hasilTotal ?></td>
+            </tr>
+            <tr>
+              <td colspan="3">4. Rapel </td>
+              <td><?php echo $potong['potongan_rapel'] ?></td>
+              <td> = </td>
+              <td> Rp <?php echo $potong['potongan_rapel'] ?></td>
+            </tr>
+            <tr>
+              <td colspan="6">Total (A)  </td>
+              <td>Rp <?php echo $gajiSeluruh; ?></td>
+            </tr>
+            <tr>
+              <td>B POTONGAN</td>
+            </tr>
+            <tr>
+              <td colspan="5">Program Jamsostek</td>
+              <td><?php echo $jamSostek ?></td>
+            </tr>
+            <tr>
+              <td colspan="5">Pinjaman</td>
+              <td><?php echo $potong['potongan_pinjaman'] ?></td>
+            </tr>
+            <tr>
+              <td colspan="5">Rapel</td>
+              <td><?php echo $potong['potongan_rapel'] ?></td>
+            </tr>
+            <tr>
+              <td colspan="6">Total (B) </td>
+              <td>Rp <?php echo $totalPotong ?></td>
+            </tr>
+            <tr>
+              <td colspan="6"> total take home pay = (total A - total B)</td>
+              <td>Rp <?php echo $totalAB; ?></td>
+            </tr>
+          </table>
         </table>
       </div>
     </div>
-    </div>
-    </div>
+  </div>
+</div>
 
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="formModal"
       aria-hidden="true">
@@ -202,3 +325,187 @@
         </div>
       </div>
     </div>
+
+    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="formModal"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="formModal">Input Potongan</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form class="needs-validation" novalidate="" action="<?php echo base_url('contract/potongan/'.$id) ?>" method="post">
+              <div class="form-group">
+                <label>Kesehatan</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <i class="fas fa-calendar"></i>
+                    </div>
+                  </div>
+                  <input type="number" class="form-control" placeholder="" name="kesehatan">
+                  <div class="invalid-feedback">
+                    Field tidak boleh kosong
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Ketenaga kerjaan</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <i class="fas fa-outdent"></i>
+                    </div>
+                  </div>
+                  <input type="number" name="ketenagakerjaan" class="form-control">
+                  <div class="invalid-feedback">
+                    Field tidak boleh kosong
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Dana Pensiun</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <i class="fas fa-outdent"></i>
+                    </div>
+                  </div>
+                  <input type="number" name="danapensiun" class="form-control">
+                  <div class="invalid-feedback">
+                    Field tidak boleh kosong
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Pinjaman</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <i class="fas fa-outdent"></i>
+                    </div>
+                  </div>
+                  <input type="number" name="pinjaman" class="form-control">
+                  <div class="invalid-feedback">
+                    Field tidak boleh kosong
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Rapel</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <i class="fas fa-outdent"></i>
+                    </div>
+                  </div>
+                  <input type="number" name="rapel" class="form-control">
+                  <div class="invalid-feedback">
+                    Field tidak boleh kosong
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary mr-1" name="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      </div>
+
+        <div class="modal fade" id="exampleModal2<?php echo $ubahPotong['potongan_id'];?>" tabindex="-1" role="dialog" aria-labelledby="formModal"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="formModal">Input Potongan</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form class="needs-validation" novalidate="" action="<?php echo base_url('contract/ubahPot/'.$id) ?>" method="post">
+                    <div class="form-group">
+                      <label>Kesehatan</label>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">
+                            <i class="fas fa-calendar"></i>
+                          </div>
+                        </div>
+                        <input type="number" class="form-control" placeholder="" name="kesehatan" value="<?php echo $ubahPotong['potongan_jamsostek_kesehatan'] ?>">
+                        <div class="invalid-feedback">
+                          Field tidak boleh kosong
+                        </div>
+                      </div>
+                    </div>
+
+                    <input type="hidden" name="potongId" value="<?php echo $ubahPotong['potongan_id'] ?>">
+
+                    <div class="form-group">
+                      <label>Ketenaga kerjaan</label>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">
+                            <i class="fas fa-outdent"></i>
+                          </div>
+                        </div>
+                        <input type="number" name="ketenagakerjaan" class="form-control" value="<?php echo $ubahPotong['potongan_jamsostek_kerja'] ?>">
+                        <div class="invalid-feedback">
+                          Field tidak boleh kosong
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>Dana Pensiun</label>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">
+                            <i class="fas fa-outdent"></i>
+                          </div>
+                        </div>
+                        <input type="number" name="danapensiun" class="form-control" value="<?php echo $ubahPotong['potongan_dana_pensiun'] ?>">
+                        <div class="invalid-feedback">
+                          Field tidak boleh kosong
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>Pinjaman</label>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">
+                            <i class="fas fa-outdent"></i>
+                          </div>
+                        </div>
+                        <input type="number" name="pinjaman" class="form-control" value="<?php echo $ubahPotong['potongan_pinjaman'] ?>">
+                        <div class="invalid-feedback">
+                          Field tidak boleh kosong
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label>Rapel</label>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">
+                            <i class="fas fa-outdent"></i>
+                          </div>
+                        </div>
+                        <input type="number" name="rapel" class="form-control" value="<?php echo $ubahPotong['potongan_rapel'] ?>">
+                        <div class="invalid-feedback">
+                          Field tidak boleh kosong
+                        </div>
+                      </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mr-1" name="submit">Submit</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            </div>

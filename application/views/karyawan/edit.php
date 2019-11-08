@@ -33,8 +33,22 @@
                       </div>
                     </div>
                     <div class="form-group">
+                      <label>Nama Rekening</label>
+                      <input type="text" class="form-control" name="namarekening" value="<?php echo $row['karyawan_nama_rekening'] ?>" required>
+                      <div class="invalid-feedback">
+                        No Rekening tidak boleh kosong
+                      </div>
+                    </div>
+                    <div class="form-group">
                       <label>No Rekening</label>
                       <input type="text" class="form-control" name="norekening" value="<?php echo $row['karyawan_no_rekening'] ?>" required>
+                      <div class="invalid-feedback">
+                        No Rekening tidak boleh kosong
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>BPJS</label>
+                      <input type="text" class="form-control" name="norekening" value="<?php echo $row['karyawan_bpjs'] ?>" required>
                       <div class="invalid-feedback">
                         No Rekening tidak boleh kosong
                       </div>

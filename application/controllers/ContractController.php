@@ -38,6 +38,7 @@ class ContractController extends CI_Controller
       $data['bulan'] = $dataBulan;
     }else {
       $data['gaji'] = null;
+      $data['karyawan'] = $this->gaji->tampildata();
       $data['bulan'] = $dataBulan;
     }
     $this->load->view('templates/header');
@@ -49,6 +50,8 @@ class ContractController extends CI_Controller
     $data['id'] = $id;
     $data['detail'] = $this->gaji->detail_gaji($id);
     $data['gaji'] = $this->gaji->lihat_gaji($id);
+    $data['potong'] = $this->gaji->potonganData($id);
+    $data['ubahPotong'] = $this->gaji->utkPotong($id);
     $this->load->view('templates/header');
     $this->load->view('gaji/contract/detail',$data);
     $this->load->view('templates/footer');
@@ -162,18 +165,18 @@ class ContractController extends CI_Controller
           $ns = 1;
           if ($jamKeluar >= 8 && $jamKeluar <= 10) {
             $jamBasic = $jamKeluar - 7;
-            $totalLembur = 2.5;
+            $totalLembur = 1.5;
           }elseif ($jamKeluar == 11) {
             $basic = 1;
             $uangMakan = 1;
             $jamBasic = $jamKeluar - 7;
-            $totalLembur = 2.5;
+            $totalLembur = 1.5;
           }elseif ($jamKeluar == 14) {
             $basic = 1;
             $uangMakan = 1;
             $jamLembur = $jamKeluar - 13;
             $jamBasic = $jamKeluar - 5;
-            $lembur = 2.5;
+            $lembur = 1.5;
             $lembur1_5 = $jamLembur;
             $totalLembur = ($lembur1_5 * 1.5) + $lembur;
           }elseif ($jamKeluar >= 15 && $jamKeluar <= 17) {
@@ -184,7 +187,7 @@ class ContractController extends CI_Controller
             $lembur = $jamLembur + 1.5;
             $lembur1_5 = 1;
             $lembur2 = $jamLembur - $lembur1_5;
-            $totalLembur = ($lembur1_5 * 1.5) + ($lembur2 * 2)+2.5;
+            $totalLembur = ($lembur1_5 * 1.5) + ($lembur2 * 2)+1.5;
           }elseif ($jamKeluar == 18) {
             $basic = 1;
             $uangMakan = 1;
@@ -193,7 +196,7 @@ class ContractController extends CI_Controller
             $lembur = $jamLembur + 1.5;
             $lembur1_5 = 1;
             $lembur2 = $jamLembur - $lembur1_5;
-            $totalLembur = ($lembur1_5 * 1.5) + ($lembur2 * 2) + 2.5;
+            $totalLembur = ($lembur1_5 * 1.5) + ($lembur2 * 2) + 1.5;
           }elseif ($jamKeluar >= 19) {
             $basic = 1;
             $uangMakan = 1;
@@ -245,29 +248,30 @@ class ContractController extends CI_Controller
           $ns = 1;
           if ($jamKeluar >= 8 && $jamKeluar <= 9) {
             $jamBasic = $jamKeluar - 7;
-            $totalLembur = 2.5;
+            $totalLembur = 1.5;
           }elseif ($jamKeluar >= 10 && $jamKeluar <= 11) {
             $basic = 0.5;
             $jamBasic = $jamKeluar - 7;
-            $totalLembur = 2.5;
+            $totalLembur = 1.5;
           }elseif ($jamKeluar >= 14 && $jamKeluar <= 15) {
             $basic = 0.5;
             $jamBasic = $jamKeluar - 9;
-            $totalLembur = 2.5;
+            $totalLembur = 1.5;
           }elseif ($jamKeluar >= 16 && $jamKeluar <= 17) {
             $basic = 1;
             $uangMakan = 1;
             $jamBasic = $jamKeluar - 9;
-            $totalLembur = 2.5;
+            $totalLembur = 1.5;
           }elseif ($jamKeluar == 18) {
             $basic = 1;
             $uangMakan = 1;
             $jamLembur = $jamKeluar - 17;
             $jamBasic = 8;
-            $lembur = $jamLembur + 1.5;
+            $lembur = 1;
             $lembur1_5 = 1;
             $lembur2 = $lembur - $lembur1_5 ;
-            $totalLembur = ($lembur1_5 * 1.5) + ($lembur2 * 2) + 2.5;
+            // $totalLembur = ($lembur1_5 * 1.5) + ($lembur2 * 2) + 2.5;
+            $totalLembur = ($lembur1_5 * 1.5) + ($lembur2 * 2) + 1.5 ;
           }elseif ($jamKeluar >= 19) {
             $basic = 1;
             $uangMakan = 1;
@@ -276,7 +280,7 @@ class ContractController extends CI_Controller
             $lembur = $jamLembur + 1.5;
             $lembur1_5 = 1;
             $lembur2 = $lembur - ($lembur1_5 *1.5) ;
-            $totalLembur = ($lembur1_5 * 1.5) + ($lembur2 * 2) + 2.5;
+            $totalLembur = ($lembur1_5 * 1.5) + ($lembur2 * 2) - 0.5;
           }
         }
       }
@@ -320,21 +324,21 @@ class ContractController extends CI_Controller
           $ns = 1;
           if ($jamKeluar >= 8 && $jamKeluar <= 9) {
             $jamBasic = $jamKeluar - 7;
-            $totalLembur = 2.5;
+            $totalLembur = 1.5;
           }elseif ($jamKeluar >= 10 && $jamKeluar <= 11) {
             $basic = 0.5;
             $jamBasic = $jamKeluar - 7;
-            $totalLembur = 2.5;
+            $totalLembur = 1.5;
           }elseif ($jamKeluar >= 14 && $jamKeluar <= 15) {
             //masih ragu 0.5 atau 0
             $basic = 0.5;
             $jamBasic = $jamKeluar - 9;
-            $totalLembur = 2.5;
+            $totalLembur = 1.5;
           }elseif ($jamKeluar == 16) {
             $basic = 1;
             $uangMakan = 1;
             $jamBasic = $jamKeluar - 9;
-            $totalLembur = 2.5;
+            $totalLembur = 1.5;
           }elseif ($jamKeluar >= 17 && $jamKeluar <= 18) {
             $basic = 1;
             $uangMakan = 1;
@@ -343,7 +347,7 @@ class ContractController extends CI_Controller
             $lembur = $jamLembur + 1.5;
             $lembur1_5 = 1;
             $lembur2 = $jamLembur - $lembur1_5 ;
-            $totalLembur = ($lembur1_5 * 1.5) + ($lembur2 * 2) + 2.5;
+            $totalLembur = ($lembur1_5 * 1.5) + ($lembur2 * 2) + 1.5;
           }
           elseif ($jamKeluar >= 19) {
             $basic = 1;
@@ -371,7 +375,9 @@ class ContractController extends CI_Controller
         'detail_lembur_2'=>$lembur2,
         'detail_total_lembur'=>$totalLembur
       );
-      $validasi = $this->gaji->validasi_detail($data['detail_tanggal'],'contract');
+      // echo "<pre>";
+      // var_dump($data);die;
+      $validasi = $this->gaji->validasi_detail($data['detail_tanggal'],'contract',$data['detail_gaji_id']);
       if ($validasi == null) {
         $this->gaji->simpan_detail_gaji($data);
         $this->session->set_flashdata('alert', '1berhasil_tambah');
@@ -379,8 +385,6 @@ class ContractController extends CI_Controller
       }else{
       $this->session->set_flashdata('alert', '1gagall_tambah');
       redirect('contract/detail/'.$id);
-      // echo "<pre>";
-      // var_dump($data);die;
     }
     }
   }
@@ -400,10 +404,70 @@ class ContractController extends CI_Controller
         $this->session->set_flashdata('alert', 'gagall_tambah');
         redirect('contract/lihat/'.$tanggal);
       }
-
       // echo "<pre>";
       // var_dump($data);die;
     }
+  }
+  public function potongan($id)
+  {
+    if (isset($_POST['submit'])) {
+      $data = array(
+        'potongan_gaji_id'=>$id,
+        'potongan_jamsostek_kesehatan'=>$this->input->post('kesehatan'),
+        'potongan_jamsostek_kerja'=>$this->input->post('ketenagakerjaan'),
+        'potongan_dana_pensiun'=>$this->input->post('danapensiun'),
+        'potongan_pinjaman'=>$this->input->post('pinjaman'),
+        'potongan_rapel'=>$this->input->post('rapel')
+      );
+      // echo "<pre>";
+      // var_dump($data);die;
+      $this->gaji->potonganSimpan($data);
+      $this->session->set_flashdata('alert', 'berhasil');
+      redirect('contract/detail/'.$id);
+    }
+  }
+  public function ubahPot($id)
+  {
+    if (isset($_POST['submit'])) {
+      $idPotong = $this->input->post('potongId');
+      $kesehatan = $this->input->post('kesehatan');
+      $kerja = $this->input->post('ketenagakerjaan');
+      $pensiun = $this->input->post('danapensiun');
+      $pinjam = $this->input->post('pinjaman');
+      $rapel = $this->input->post('rapel');
 
+      $data = array(
+        'potongan_jamsostek_kesehatan'=>$kesehatan,
+        'potongan_jamsostek_kerja'=>$kerja,
+        'potongan_dana_pensiun'=>$pensiun,
+        'potongan_pinjaman'=>$pinjam,
+        'potongan_rapel'=>$rapel
+      );
+      // echo "<pre>";
+      // var_dump($data);die;
+      $this->gaji->ubahPot($idPotong,$data);
+      $this->session->set_flashdata('alert', 'berhasil_edit');
+      redirect('contract/detail/'.$id);
+    }
+  }
+  public function laporan($dataBulan)
+  {
+    $cekGaji = $this->gaji->cek_gaji($dataBulan);
+    $data = array();
+    if ($cekGaji != null) {
+      $data['gaji'] = $cekGaji;
+      // $data['seluruh'] = $this->gaji->dataSeluruh($dataBulan);
+      $data['bulan'] = $dataBulan;
+    }else {
+      $data['gaji'] = null;
+      // $data['seluruh'] = $this->gaji->dataSeluruh($dataBulan);
+      $data['bulan'] = $dataBulan;
+    }
+    // $data['laporan'] = $this->gaji->detailPotongan($dataBulan);
+    $data['seluruh'] = $this->gaji->dataSeluruh($dataBulan);
+    $data['detail'] = $this->gaji->detailSeluruh($dataBulan);
+    $this->load->view('templates/header');
+    $this->load->view('gaji/contract/laporan',$data);
+    $this->load->view('templates/footer');
   }
 }

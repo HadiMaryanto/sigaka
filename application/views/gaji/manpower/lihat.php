@@ -32,7 +32,8 @@
           <h4>Data Gaji Manpower <?php $tanggal = explode('-',$bulan); echo bulan($tanggal[1]).' '.$tanggal[0]; ?></h4>
           </div>
           <div class="card-body">
-            <a href="<?php echo base_url('gaji')  ?>" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Tambah</a><hr>
+            <a href="<?php echo base_url('gaji')  ?>" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Tambah</a>
+            <a href="<?php echo base_url('manpower/laporan/'.$this->uri->segment(3))  ?>" class="btn btn-warning" >Laporan</a><hr>
             <div class="table-responsive">
               <table class="table table-striped" id="table-1">
                 <thead>
@@ -71,8 +72,8 @@
               </table>
             </div>
           </div>
-          </div>
-          </div>
+        </div>
+      </div>
 
           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="formModal"
             aria-hidden="true">
