@@ -41,7 +41,23 @@
     <div class="card-header">
       <h4>Detail Gaji </h4>
     </div>
-    <div class="card-body">
+    <div class="card-body" id="laporan">
+      <!-- <div class="card-content">
+        <div class="row">
+          <div class="col-6">
+            <h5>Nama : </h5>
+            <h5>jabatan : </h5>
+            <h5>Badge No : </h5>
+          </div>
+          <div class="col-6">
+            <div class="d-flex justify-content-end">
+              <h5><?php echo $gaji['karyawan_nama'] ?></h5>
+              <h5><?php echo $gaji['jabatan_nama'] ?></h5>
+              <h5><?php echo $gaji['karyawan_nik'] ?></h5>
+            </div>
+          </div>
+        </div>
+      </div> -->
       <table>
           <tr>
             <td>Nama </td>
@@ -112,16 +128,18 @@
       <hr>
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Tambah</button>
       <?php if ($ubahPotong == null): ?>
-        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal1">Tambah Potongan</button><hr>
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal1">Tambah Potongan</button>
       <?php else: ?>
-        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal2<?php echo $ubahPotong['potongan_id'];?>">Edit Potongan</button><hr>
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal2<?php echo $ubahPotong['potongan_id'];?>">Edit Potongan</button>
       <?php endif; ?>
+        <button type="button" name="button" class="btn btn-success" onclick="tabletoExcel('laporan', 'laporan gaji karyawan')">cetak laporan</button><hr>
       <div class="table-responsive">
         <table class="table table-striped" id="table-1" width="100%">
           <thead>
             <tr>
               <th rowspan="2">Schedule</th>
               <th rowspan="2">Basic</th>
+              <th rowspan="2">Uang Hadir</th>
               <th rowspan="2">Meal Allowance</th>
               <th colspan="4">Hours</th>
               <th rowspan="2">Basic</th>
@@ -140,6 +158,7 @@
           </thead>
           <tbody>
             <?php
+            $uangHadir = 0;
             $totalBasic = 0;
             $totalMeal = 0;
             $totalLembur = 0;
@@ -148,8 +167,9 @@
               <?php
               foreach ($detail as $key => $value): ?>
                 <tr>
-                  <td><?php echo $value['detail_tanggal'] ?></td>
+                  <td><?php echo longdate_indo($value['detail_tanggal']) ?></td>
                   <td><?php echo $value['detail_basic'] ?></td>
+                  <td><?php echo $value['detail_uang_hadir'] ?></td>
                   <td><?php echo $value['detail_uang_makan'] ?></td>
                   <td></td>
                   <td><?php echo $value['detail_jam_keluar'] ?></td>
@@ -162,13 +182,15 @@
                   <td><?php echo $value['detail_total_lembur'] ?></td>
                 </tr>
               <?php
+              $uangHadir = $uangHadir + $value['detail_uang_hadir'];
+              $totalhadir = $uangHadir * 15000;
               $totalBasic = $totalBasic + $value['detail_basic'];
               $totalMeal = $totalMeal + $value['detail_uang_makan'];
               $totalLembur = $totalLembur + $value['detail_total_lembur'];
               $hasilBasic = $totalBasic * $gaji['jabatan_basic'];
               $hasilMeal = $totalMeal * $gaji['jabatan_uang_makan'];
               $hasilTotal = $totalLembur * $gaji['jabatan_lembur'];
-              $gajiSeluruh = $hasilBasic + $hasilMeal + $hasilTotal;
+              $gajiSeluruh = $hasilBasic + $hasilMeal + $hasilTotal + $totalhadir;
               $jamSostek = $potong['potongan_jamsostek_kesehatan'] + $potong['potongan_jamsostek_kerja'] + $potong['potongan_dana_pensiun'];
               $totalPotong = $jamSostek + $potong['potongan_pinjaman'] + $potong['potongan_rapel'];
               $totalAB = $gajiSeluruh - $totalPotong;
@@ -178,7 +200,16 @@
           <tr style="margin-bottom:10px;border:1px;">
             <td class="text-center">Total</td>
             <td><?php echo $totalBasic; ?> </td>
-            <td colspan="9"><?php echo $totalMeal; ?></td>
+            <td><?php echo $uangHadir; ?></td>
+            <td><?php echo $totalMeal; ?></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
             <td><?php echo $totalLembur; ?></td>
           </tr>
           <table style="color:black;">
@@ -192,19 +223,25 @@
               <td>Rp <?php echo $hasilBasic ?></td>
             </tr>
             <tr>
-              <td colspan="3">2. total meal </td>
+              <td colspan="3">2. total hadir </td>
+              <td><?php echo $uangHadir; ?> x <?php echo 15000 ?></td>
+              <td> = </td>
+              <td>Rp <?php echo $totalhadir ?></td>
+            </tr>
+            <tr>
+              <td colspan="3">3. total meal </td>
               <td><?php echo $totalMeal; ?> x <?php echo $gaji['jabatan_uang_makan'] ?></td>
               <td> = </td>
               <td>Rp <?php echo $hasilMeal ?></td>
             </tr>
             <tr>
-              <td colspan="3">3. total lembur </td>
+              <td colspan="3">4. total lembur </td>
               <td><?php echo $totalLembur ?> x <?php echo $gaji['jabatan_lembur'] ?></td>
               <td> = </td>
               <td> Rp <?php echo $hasilTotal ?></td>
             </tr>
             <tr>
-              <td colspan="3">4. Rapel </td>
+              <td colspan="3">5. Rapel </td>
               <td><?php echo $potong['potongan_rapel'] ?></td>
               <td> = </td>
               <td> Rp <?php echo $potong['potongan_rapel'] ?></td>
@@ -509,3 +546,17 @@
               </div>
             </div>
             </div>
+
+            <script type="text/javascript">
+                function tabletoExcel(table, name) {
+                    var uri = 'data:application/vnd.ms-excel;base64,'
+                          , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+                          , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))); }
+                          , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }); };
+                        if (!table.nodeType) table = document.getElementById(table);
+                        var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML };
+                        window.location.href = uri + base64(format(template, ctx));
+
+                }
+
+            </script>

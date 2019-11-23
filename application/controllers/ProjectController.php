@@ -465,4 +465,25 @@ class ProjectController extends CI_Controller
     $this->load->view('gaji/project/laporan',$data);
     $this->load->view('templates/footer');
   }
+  public function bank($dataBulan)
+  {
+      $cekGaji = $this->gaji->cek_gaji($dataBulan);
+      $data = array();
+      if ($cekGaji != null) {
+        $data['gaji'] = $cekGaji;
+        // $data['seluruh'] = $this->gaji->dataSeluruh($dataBulan);
+        $data['bulan'] = $dataBulan;
+      }else {
+        $data['gaji'] = null;
+        // $data['seluruh'] = $this->gaji->dataSeluruh($dataBulan);
+        $data['bulan'] = $dataBulan;
+      }
+      // $data['bank'] = $this->gaji->LaporanBank($dataBulan);
+      $data['seluruh'] = $this->gaji->dataSeluruh($dataBulan);
+      $data['detail'] = $this->gaji->detailSeluruh($dataBulan);
+      $this->load->view('templates/header');
+      $this->load->view('gaji/project/bank',$data);
+      $this->load->view('templates/footer');
+
+  }
 }

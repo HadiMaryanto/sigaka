@@ -149,7 +149,7 @@ class ContractController extends CI_Controller
             $jamBasic = 4;
             $lembur = $jamLembur;
             $lembur1_5 = 1;
-            $lembur2 = $lembur - $lembur1_5;
+            $lembur2 = 2;
             $totalLembur = ($lembur1_5 * 1.5) + ($lembur2 * 2);
           }elseif ($jamKeluar >= 19) {
             $basic = 1;
@@ -269,7 +269,7 @@ class ContractController extends CI_Controller
             $jamBasic = 8;
             $lembur = 1;
             $lembur1_5 = 1;
-            $lembur2 = $lembur - $lembur1_5 ;
+            $lembur2 = 2 ;
             // $totalLembur = ($lembur1_5 * 1.5) + ($lembur2 * 2) + 2.5;
             $totalLembur = ($lembur1_5 * 1.5) + ($lembur2 * 2) + 1.5 ;
           }elseif ($jamKeluar >= 19) {
@@ -307,7 +307,7 @@ class ContractController extends CI_Controller
             $jamBasic = 8;
             $lembur = $jamLembur;
             $lembur1_5 = 1;
-            $lembur2 = $lembur - $lembur1_5 ;
+            $lembur2 = 2 ;
             $totalLembur = ($lembur1_5 * 1.5) + ($lembur2 * 2);
           }
           elseif ($jamKeluar >= 19) {
@@ -365,6 +365,7 @@ class ContractController extends CI_Controller
         'detail_gaji_id'=>$id,
         'detail_tanggal'=>$tanggal,
         'detail_basic'=>$basic,
+        'detail_uang_hadir'=>1,
         'detail_uang_makan'=>$uangMakan,
         'detail_jam_keluar'=>$jamKeluar,
         'detail_non_stop'=>$ns,
@@ -469,5 +470,26 @@ class ContractController extends CI_Controller
     $this->load->view('templates/header');
     $this->load->view('gaji/contract/laporan',$data);
     $this->load->view('templates/footer');
+  }
+  public function bank($dataBulan)
+  {
+      $cekGaji = $this->gaji->cek_gaji($dataBulan);
+      $data = array();
+      if ($cekGaji != null) {
+        $data['gaji'] = $cekGaji;
+        // $data['seluruh'] = $this->gaji->dataSeluruh($dataBulan);
+        $data['bulan'] = $dataBulan;
+      }else {
+        $data['gaji'] = null;
+        // $data['seluruh'] = $this->gaji->dataSeluruh($dataBulan);
+        $data['bulan'] = $dataBulan;
+      }
+      // $data['bank'] = $this->gaji->LaporanBank($dataBulan);
+      $data['seluruh'] = $this->gaji->dataSeluruh($dataBulan);
+      $data['detail'] = $this->gaji->detailSeluruh($dataBulan);
+      $this->load->view('templates/header');
+      $this->load->view('gaji/contract/bank',$data);
+      $this->load->view('templates/footer');
+
   }
 }

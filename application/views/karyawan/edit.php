@@ -48,7 +48,7 @@
                     </div>
                     <div class="form-group">
                       <label>BPJS</label>
-                      <input type="text" class="form-control" name="norekening" value="<?php echo $row['karyawan_bpjs'] ?>" required>
+                      <input type="text" class="form-control" name="bpjs" value="<?php echo $row['karyawan_bpjs'] ?>" required>
                       <div class="invalid-feedback">
                         No Rekening tidak boleh kosong
                       </div>

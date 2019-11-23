@@ -126,7 +126,15 @@
      $this->db->join('sigaka_karyawan','sigaka_karyawan.karyawan_nik = sigaka_gaji.gaji_karyawan_nik');
      $this->db->join('sigaka_potongan','sigaka_potongan.potongan_gaji_id = sigaka_gaji.gaji_id','left');
      $this->db->like('gaji_date_created',$dataBulan);
-
+     $query = $this->db->get();
+     return $query->result_array();
+   }
+   public function LaporanBank($dataBulan)
+   {
+     $this->db->from('sigaka_gaji');
+     $this->db->join('sigaka_karyawan','sigaka_karyawan.karyawan_nik = sigaka_gaji.gaji_karyawan_nik');
+     $this->db->join('sigaka_potongan','sigaka_potongan.potongan_gaji_id = sigaka_gaji.gaji_id','left');
+     $this->db->like('gaji_date_created',$dataBulan);
      $query = $this->db->get();
      return $query->result_array();
    }

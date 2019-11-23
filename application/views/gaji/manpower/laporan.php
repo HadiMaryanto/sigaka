@@ -5,8 +5,13 @@
     <h4>Data Gaji Contract Bulan <?php $tanggal = explode('-',$bulan); echo bulan($tanggal[1]).' '.$tanggal[0]; ?></h4>
     </div>
     <div class="card-body">
+      <div class="d-flex justify-content-between mb-3">
+        <a href="<?php echo base_url('manpower/bank/'.$this->uri->segment(3))  ?>" class="btn btn-warning" >Laporan Bank</a><hr>
+        <button type="button" name="button" class="btn btn-success" onclick="tabletoExcel('laporan-gaji', 'laporan gaji karyawan')">cetak laporan</button>
+      </div>
       <div class="table-responsive">
-        <table class="table table-striped table-responsive" id="table-1">
+
+        <table class="table table-striped table-responsive example" id="laporan-gaji">
           <thead>
           <tr>
             <th rowspan="3" class="text-center">No</th>
@@ -131,4 +136,16 @@
     </div>
     </div>
 
-    
+    <script type="text/javascript">
+    function tabletoExcel(table, name) {
+        var uri = 'data:application/vnd.ms-excel;base64,'
+              , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+              , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))); }
+              , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }); };
+            if (!table.nodeType) table = document.getElementById(table);
+            var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML };
+            window.location.href = uri + base64(format(template, ctx));
+
+    }
+
+    </script>

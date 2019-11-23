@@ -5,8 +5,12 @@
     <h4>Data Gaji Contract Bulan <?php $tanggal = explode('-',$bulan); echo bulan($tanggal[1]).' '.$tanggal[0]; ?></h4>
     </div>
     <div class="card-body">
+      <div class="d-flex justify-content-between mb-3">
+      <a href="<?php echo base_url('contract/bank/'.$this->uri->segment(3))  ?>" class="btn btn-warning" >Laporan Bank</a><hr>
+      <button type="button" name="button" class="btn btn-success" onclick="tabletoExcel('laporan-gaji', 'laporan gaji karyawan')">cetak laporan</button>
+    </div>
       <div class="table-responsive">
-        <table class="table table-striped table-responsive" id="table-1">
+        <table class="table table-striped table-responsive" id="laporan-gaji">
           <thead>
           <tr>
             <th rowspan="3" class="text-center">No</th>
@@ -17,7 +21,7 @@
             <th colspan="3" class="text-center">Upah Kerja</th>
             <th rowspan="3">Tunjangan</th>
             <th rowspan="3">Total Gaji</th>
-            <th colspan="6" class="text-center">Potongan</th>
+            <th colspan="7" class="text-center">Potongan</th>
             <th rowspan="3">Total Potongan</th>
             <th rowspan="3">Total Gaji yg Diterima</th>
             <th rowspan="3">Nomor Rekening</th>
@@ -25,6 +29,7 @@
           </tr>
           <tr>
             <th rowspan="2">Basic/Hari</th>
+            <th rowspan="2">Uang Hadir/Hari</th>
             <th rowspan="2">Uang Makan/Hari</th>
             <th rowspan="2">Lembur/Jam</th>
             <th rowspan="2">Basic/Hari</th>
@@ -56,6 +61,7 @@
                 <td><?php echo $value['jabatan_nama'] ?></td>
                 <?php
                 $basic = 0;
+                $uangHadir = 0;
                 $uangMakan = 0;
                 $lembur = 0;
                 $totalbasic = 0;
@@ -69,16 +75,19 @@
                   if ($value2['karyawan_nik'] == $value['karyawan_nik']): ?>
                   <?php
                   $basic = $basic + $value2['detail_basic'];
+                  $uangHadir = $uangHadir + $value2['detail_uang_hadir'];
                   $uangMakan = $uangMakan + $value2['detail_uang_makan'];
                   $lembur = $lembur + $value2['detail_total_lembur'];
+                  $totalhadir = $uangHadir * 15000;
                   $totalbasic = $value['jabatan_basic'] * $basic;
                   $totalUangMakan = $value['jabatan_uang_makan'] * $uangMakan;
                   $totalLembur = $value['jabatan_lembur'] * $lembur;
-                  $totalGaji = $totalbasic + $totalUangMakan + $totalLembur;
+                  $totalGaji = $totalbasic + $totalUangMakan + $totalLembur + $totalhadir;
                    ?>
                 <?php endif; ?>
                 <?php endforeach; ?>
                 <td><?php echo $basic ?></td>
+                <td><?php echo $uangHadir ?></td>
                 <td><?php echo $uangMakan ?></td>
                 <td><?php echo $lembur ?></td>
                 <td><?php echo $value['jabatan_basic'] ?></td>
@@ -128,46 +137,19 @@
         </table>
       </div>
     </div>
-    </div>
-    </div>
+  </div>
+</div>
 
-    <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="formModal"
-      aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="formModal">Karyawan </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form class="needs-validation" novalidate="" action="<?php echo base_url('donatur/tambah/'.$this->uri->segment(3)) ?>" method="post">
-              <div class="form-group">
-                <label>Karyawan</label>
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <div class="input-group-text">
-                      <i class="fas fa-user"></i>
-                    </div>
-                  </div>
-                  <select class="form-control" name="namakaryawan">
-                    <option disabled selected>- Nama Karyawan -</option>
-                    <?php foreach ($karyawan as $key => $value): ?>
-                      <option value="<?php echo $value['karyawan_nik'] ?>"><?php echo $value['karyawan_nama'] ?></option>
-                    <?php endforeach; ?>
-                  </select>
-                  <div class="invalid-feedback">
-                    Field tidak boleh kosong
-                  </div>
-                </div>
-              </div>
-              <input type="hidden" name="tipe">
+<script type="text/javascript">
+    function tabletoExcel(table, name) {
+        var uri = 'data:application/vnd.ms-excel;base64,'
+              , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+              , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))); }
+              , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }); };
+            if (!table.nodeType) table = document.getElementById(table);
+            var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML };
+            window.location.href = uri + base64(format(template, ctx));
 
+    }
 
-              <button type="submit" class="btn btn-primary mr-1" name="submit">Submit</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div> -->
+</script>

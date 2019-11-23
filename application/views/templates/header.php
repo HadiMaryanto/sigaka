@@ -20,6 +20,7 @@
 
   <link rel="stylesheet" href="<?php echo base_url()?>assets/bundles/datatables/datatables.min.css">
   <link rel="stylesheet" href="<?php echo base_url()?>assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
+	<link rel="stylesheet" href="<?php echo base_url()?>assets/css/buttons.dataTables.min.css">
 
 	<link rel="stylesheet" href="<?php echo base_url()?>assets/bundles/bootstrap-daterangepicker/daterangepicker.css">
 	<link rel="stylesheet" href="<?php echo base_url()?>assets/bundles/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
@@ -106,7 +107,7 @@
             <li class="dropdown"><a href="#" class="nav-link has-dropdown"><i
 									data-feather="folder-plus"></i><span>Laporan</span></a>
 							<ul class="dropdown-menu">
-								<li><a class="nav-link" href="widget-chart.html">Data Karyawan</a></li>
+								<li><a class="nav-link" href="<?php echo base_url('laporan'); ?>">Laporan Bank</a></li>
 								<li><a class="nav-link" href="widget-data.html">Data Jabatan</a></li>
 							</ul>
 						</li>

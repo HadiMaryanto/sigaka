@@ -40,7 +40,7 @@
     <div class="card-header">
       <h3>Detail Gaji</h3>
     </div>
-    <div class="card-body">
+    <div class="card-body" id="laporan">
       <table>
           <tr>
             <td>Nama </td>
@@ -111,11 +111,11 @@
       <hr>
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Tambah</button>
       <?php if ($ubahPotong == null): ?>
-        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal1">Potongan</button><hr>
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal1">Potongan</button>
       <?php else: ?>
-        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal2<?php echo $ubahPotong['potongan_id'];?>">Edit Potongan</button><hr>
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal2<?php echo $ubahPotong['potongan_id'];?>">Edit Potongan</button>
       <?php endif; ?>
-
+        <button type="button" name="button" class="btn btn-success" onclick="tabletoExcel('laporan', 'laporan gaji karyawan')">cetak laporan</button><hr>
       <div class="table-responsive">
         <table class="table table-striped" id="table-1" width="100%">
           <thead>
@@ -147,7 +147,9 @@
               <?php
               foreach ($detail as $key => $value): ?>
                 <tr>
-                  <td><?php echo $value['detail_tanggal'] ?></td>
+
+
+                  <td><?php echo longdate_indo($value['detail_tanggal'])?></td>
                   <td><?php echo $value['detail_basic'] ?></td>
                   <td><?php echo $value['detail_uang_makan'] ?></td>
                   <td></td>
@@ -177,7 +179,15 @@
           <tr style="margin-bottom:10px;border:1px;">
             <td class="text-center">Total</td>
             <td><?php echo $totalBasic; ?> </td>
-            <td colspan="9"><?php echo $totalMeal; ?></td>
+            <td><?php echo $totalMeal; ?></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
             <td><?php echo $totalLembur; ?></td>
           </tr>
           <table style="color:black;">
@@ -509,3 +519,17 @@
           </div>
           </div>
     <!-- <?php endforeach; ?> -->
+
+    <script type="text/javascript">
+        function tabletoExcel(table, name) {
+            var uri = 'data:application/vnd.ms-excel;base64,'
+                  , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+                  , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))); }
+                  , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }); };
+                if (!table.nodeType) table = document.getElementById(table);
+                var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML };
+                window.location.href = uri + base64(format(template, ctx));
+
+        }
+
+    </script>

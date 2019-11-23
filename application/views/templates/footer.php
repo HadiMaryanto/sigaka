@@ -11,8 +11,10 @@
     </footer>
   </div>
 </div>
+
 <!-- General JS Scripts -->
 <script type="text/javascript">
+
 
   // function ambilid(){
   //   var id = $(this).data('idlembur');
@@ -40,9 +42,6 @@
 <script src="<?php echo base_url()?>assets/bundles/chartjs/chart.min.js"></script>
 <script src="<?php echo base_url()?>assets/bundles/apexcharts/apexcharts.min.js"></script>
 <script src="<?php echo base_url()?>assets/bundles/jquery.sparkline.min.js"></script>
-<script src="<?php echo base_url()?>assets/bundles/jqvmap/dist/jquery.vmap.min.js"></script>
-<script src="<?php echo base_url()?>assets/bundles/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-<script src="<?php echo base_url()?>assets/bundles/jqvmap/dist/maps/jquery.vmap.indonesia.js"></script>
 <!-- Page Specific JS File -->
 <script src="<?php echo base_url()?>assets/js/page/index2.js"></script>
 <script src="<?php echo base_url()?>assets/js/page/todo.js"></script>
@@ -53,6 +52,17 @@
 <script src="<?php echo base_url()?>assets/bundles/datatables/datatables.min.js"></script>
 <script src="<?php echo base_url()?>assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
 <script src="<?php echo base_url()?>assets/js/page/datatables.js"></script>
+<script src="<?php echo base_url()?>assets/js/datatables.buttons.min.js"></script>
+<script src="<?php echo base_url()?>assets/js/buttons.flash.min.js"></script>
+<script src="<?php echo base_url()?>assets/js/jszip.min.js"></script>
+<script src="<?php echo base_url()?>assets/js/pdfmake.min.js"></script>
+<script src="<?php echo base_url()?>assets/js/vfs_fonts.js"></script>
+<script src="<?php echo base_url()?>assets/js/buttons.html5.min.js"></script>
+<script src="<?php echo base_url()?>assets/js/buttons.print.min.js"></script>
+<script src="<?php echo base_url()?>assets/bundles/jqvmap/dist/jquery.vmap.min.js"></script>
+<script src="<?php echo base_url()?>assets/bundles/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+<script src="<?php echo base_url()?>assets/bundles/jqvmap/dist/maps/jquery.vmap.indonesia.js"></script>
+
 
 <script src="<?php echo base_url() ?>assets/bundles/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script src="<?php echo base_url() ?>assets/bundles/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
@@ -60,6 +70,18 @@
 
 <script src="<?php echo base_url() ?>assets/bundles/sweetalert/sweetalert.min.js"></script>
 <script src="<?php echo base_url() ?>assets/js/page/sweetalert.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $('.example').DataTable( {
+      // dom: 'Bfrtip',
+      // buttons: [
+      //     'excel'
+      // ]
+  } );
+} );
+
+</script>
 </body>
 
 
